@@ -1,0 +1,39 @@
+.header-upper {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  background-color: white; /* or your preferred background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* optional: for visual effect */
+}
+.employee-form{
+  background-color: #F6F7FA;
+}
+.admin-left-side{
+  background-color: #232B48;
+  width: 100%;
+}
+
+#sidebar {
+  color: white;
+  height: 100vh; /* full screen height */
+  padding: 10px 0;
+  width: 100%;
+}
+
+.group-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  margin: 0;
+}
+.admin-left-side{
+  width: 100%;
+}
+.group-list a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  background-color: #232B48;
+}
+
