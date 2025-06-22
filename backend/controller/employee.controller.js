@@ -3,6 +3,7 @@ const statusCode = require('http-status-codes');
 async function createEmployee(req,res,next){
     const employeeExists = await employeeService.checkIfEmployeeAlreadyExists(req.body.employee_email);
     if(employeeExists){
+        console.log('employee already exists');
         return res.status(statusCode.BAD_REQUEST).json({message:"Employee already exists!!"});
     }
     else{

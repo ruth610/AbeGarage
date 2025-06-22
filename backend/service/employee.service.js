@@ -7,7 +7,7 @@ async function checkIfEmployeeAlreadyExists(email){
     const query1 = 'SELECT * FROM employee WHERE employee_email = ?'
     const response = await query(query1, [email]);
 
-    console.log(response);
+    // console.log(response);
     if(response.length > 0){
         return true
     }

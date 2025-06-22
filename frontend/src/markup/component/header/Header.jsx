@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import icon_bar from '../../../assets/template-assets/images/icons/icon-bar.png';
 import logo from '../../../assets/template-assets/images/custom/logo.png';
 import { Link } from 'react-router-dom';
 import '../../../assets/styles/custom.css';
+import {useAuth} from '../../../context/AuthContext';
+
 const Header = () => {
+    const {isLogged, isAdmin,employee,setIsLogged} = useAuth();
+    const handleClick = ()=>{
+        
+        setIsLogged(false);
+        localStorage.removeItem('employee');
+    }
+    
   return (
     <header className="main-header header-style-one">
 
@@ -16,7 +25,7 @@ const Header = () => {
                             <div className="office-hour">Monday - Saturday 7:00AM - 6:00PM</div>
                         </div>
                         <div className="right-column">
-                            <div className="phone-number">Schedule Your Appontment Today : <strong>1800 456 7890</strong>
+                            <div className="phone-number">{isLogged?'Welcome, ' + employee.employee_first_name:'Schedule Your Appontment Today '}: <strong>1800 456 7890</strong>
                             </div>
 
                         </div>
@@ -57,7 +66,7 @@ const Header = () => {
                                 </nav>
                             </div>
                             <div className="search-btn"></div>
-                            <div className="link-btn"><Link to="/login" className="theme-btn btn-style-one">Login</Link></div>
+                            <div className="link-btn"><Link to={isLogged?'':'/login'} className="theme-btn btn-style-one" onClick={handleClick}>{isLogged?'LogOut':'Login'}</Link></div>
                         </div>
                     </div>
                 </div>

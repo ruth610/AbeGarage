@@ -26,6 +26,7 @@ async function login(req,res,next){
             const token = jwt.sign(payload,jwt_secret,{
                 expiresIn: "24h",
             });
+            console.log(token);
             sendBack = {
                 employee_token:token
             }

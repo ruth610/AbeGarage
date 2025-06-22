@@ -9,7 +9,7 @@ import CTA from '../../component/features/CTA';
 
 const Home = () => {
   return (
-    <Layout>
+    <div>
         <UpperBanner description1="Tuneup Your Car" description2="to Next Level" />
         <AboutC />
         <ServiceComponent />
@@ -17,7 +17,7 @@ const Home = () => {
         <WhyChooseUs />
         <CTA />
         <UpperBanner description1="We are leader" description2="in Car Mechanical Work" />
-    </Layout>
+    </div>
   )
 }
 
