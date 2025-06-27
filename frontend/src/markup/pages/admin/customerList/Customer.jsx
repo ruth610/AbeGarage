@@ -50,6 +50,10 @@ const Customer = () => {
     const handleEdit =  (item)=>{
       navigate(`/admin/customer/${item.customer_id}`);
     }
+
+    const handleNavigate = (item)=>{
+      navigate(`/admin/customer/profile/${item.customer_id}`);
+    }
     // console.log(customers);
     function changeFormat(isoString){
       const date = new Date(isoString);

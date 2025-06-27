@@ -20,6 +20,8 @@ import Admin from './markup/pages/admin/Admin';
 import Customer from './markup/pages/admin/customerList/Customer';
 import CustomersList from './markup/pages/admin/customerList/CustomersList';
 import UpdateCustomer from './markup/pages/admin/updateCustomer/UpdateCustomer';
+import CustomerProfile from './markup/pages/admin/customerProfile/CustomerProfile';
+import CustomerProfileList from './markup/pages/admin/customerProfile/CustomerProfileList';
 function App() {
 
 
@@ -52,6 +54,7 @@ function App() {
           </PrivateAuthRoute>
         } />
         <Route path='/admin/customer/:customer_id' element={<UpdateCustomer />} />
+        <Route path='/admin/customer/profile/:customer_id' element={<CustomerProfileList />} />
         <Route path="/admin/customers"
         element={
           <PrivateAuthRoute roles={[2, 3]}>

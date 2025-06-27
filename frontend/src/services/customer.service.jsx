@@ -46,9 +46,21 @@ async function getAllCustomers(loggedInEmployeeToken){
     const response = await fetch(`${api_url}/api/customers`, requestOptions);
     return response;
 }
-async function updateCustomer(customer_id){
+async function updateCustomer(customer_id, formData){
   const requestOptions = {
         method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(formData)
+    };
+    const response = await fetch(`${api_url}/api/customer/${customer_id}`, requestOptions);
+    return response;
+}
+
+async function getCustomerById(customer_id){
+  const requestOptions = {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }
@@ -56,7 +68,10 @@ async function updateCustomer(customer_id){
     const response = await fetch(`${api_url}/api/customer/${customer_id}`, requestOptions);
     return response;
 }
+
+
 const customerService = {
+  getCustomerById,
   updateCustomer,
   createCustomer,
   loginCustomer,
