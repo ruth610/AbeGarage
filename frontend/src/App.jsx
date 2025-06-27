@@ -14,6 +14,12 @@ import Customers from './markup/pages/admin/customer/Customers';
 import Order from './markup/pages/admin/order/Order';
 import Header from './markup/component/header/Header';
 import Footer from './markup/component/footer/Footer';
+import ServiceComponent from './markup/component/service/ServiceComponent';
+import Service from './markup/pages/service/Service';
+import Admin from './markup/pages/admin/Admin';
+import Customer from './markup/pages/admin/customerList/Customer';
+import CustomersList from './markup/pages/admin/customerList/CustomersList';
+import UpdateCustomer from './markup/pages/admin/updateCustomer/UpdateCustomer';
 function App() {
 
 
@@ -23,7 +29,14 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/services" element={<Service />} />
       <Route path="/unauthorized" element={<UnAuthorized />} />
+      <Route path="/admin"
+        element={
+          <PrivateAuthRoute roles={[3]}>
+            <Admin />
+          </PrivateAuthRoute>
+        } />
       {/* // Add the Orders Route  */}
       <Route path="/admin/orders"
         element={
@@ -32,10 +45,17 @@ function App() {
           </PrivateAuthRoute>
         } />
       {/* // Add the Customers Route  */}
-      <Route path="/admin/customers"
+      <Route path="/admin/add-customer"
         element={
           <PrivateAuthRoute roles={[2, 3]}>
             <Customers />
+          </PrivateAuthRoute>
+        } />
+        <Route path='/admin/customer/:customer_id' element={<UpdateCustomer />} />
+        <Route path="/admin/customers"
+        element={
+          <PrivateAuthRoute roles={[2, 3]}>
+            <CustomersList />
           </PrivateAuthRoute>
         } />
       {/* // Add the Employees Route  */}

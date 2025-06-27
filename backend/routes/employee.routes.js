@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const addEmployeeController = require('../controller/employee.controller');
+const authMiddleware = require('../middleware/auth.middleware');
 
-router.post('/api/employee' , addEmployeeController.createEmployee);
+router.post('/api/employee' ,[authMiddleware.verifyToken ,authMiddleware.isAdmin ],addEmployeeController.createEmployee);
 
 module.exports = router;
+

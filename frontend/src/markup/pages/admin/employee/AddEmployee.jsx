@@ -5,7 +5,7 @@ import AddEmployeeForm from './AddEmployeeForm';
 
 const AddEmployee = () => {
   return (
-    <Layout>
+    <>
       <div className='container-fluid admin-pages'>
         <div className='row'>
           <div className='col-md-3 admin-left-side'>
@@ -18,7 +18,7 @@ const AddEmployee = () => {
       
       </div>
         
-    </Layout>
+    </>
   )
 }
 

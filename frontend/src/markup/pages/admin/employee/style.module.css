@@ -1,0 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.validation_error{
+    color: red;
+}
+.password_toggle_icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    z-index: 2;
+}

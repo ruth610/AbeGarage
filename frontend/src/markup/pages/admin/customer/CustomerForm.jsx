@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
-import employeeService from '../../../../services/auth.service';
-import styles from './style.module.css';
+import customerService from '../../../../services/customer.service';
+import styles from '../employee/style.module.css';
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../../../context/AuthContext';
 
-const AddEmployeeForm = () => {
+const AddCustomerForm = () => {
   const navigate = useNavigate();
-  const [employee_email,setEmployeeEmail] = useState('');
-  const [employee_phone,setEmployeePhone] = useState('');
-  const [active_employee,setActiveEmployee] = useState(1);
-  const [employee_first_name,setEmployeeFirstName] = useState('');
-  const [employee_last_name, setEmployeeLastName] = useState('');
-  const [employee_password,setEmployeePassword] = useState('');
+  const [customer_email,setCustomerEmail] = useState('');
+  const [customer_phone,setCustomerPhone] = useState('');
+  const [active_customer,setActiveCustomer] = useState(1);
+  const [customer_first_name,setCustomerFirstName] = useState('');
+  const [customer_last_name, setCustomerLastName] = useState('');
+  const [customer_password,setCustomerPassword] = useState('');
   const [loading , setLoading] = useState(false);
 
   // states for errors
@@ -27,13 +27,13 @@ const AddEmployeeForm = () => {
 
   // Create a variable to hold the user's token
     let loggedInEmployeeToken = '';
-    // Destructure the auth hook and get the token 
+    // Destructure the auth hook and get the token
     const { employee } = useAuth();
     if (employee && employee.employee_token) {
       loggedInEmployeeToken = employee.employee_token;
     }
 
-    
+    console.log(loggedInEmployeeToken);
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
   };
@@ -43,28 +43,28 @@ const AddEmployeeForm = () => {
     e.preventDefault();
 
     let valid = true;
-    if(!employee_email){
+    if(!customer_email){
       setEmailError('email is required!');
       valid = false;
     }
     else{
       setEmailError('');
     }
-    if(!employee_first_name){
+    if(!customer_first_name){
       setFirstNameError('first name is required');
       valid = false;
     }
     else{
       setFirstNameError('');
     }
-    if(!employee_last_name){
+    if(!customer_last_name){
       setLastNameError('last name is required');
       valid = false;
     }
     else{
       setLastNameError('');
     }
-    if(!employee_password || employee_password.length < 8){
+    if(!customer_password || customer_password.length < 8){
       setPasswordError('password length must be more than 8 characters!!');
       valid = false;
     }
@@ -77,16 +77,16 @@ const AddEmployeeForm = () => {
     }
 
     const formData = {
-      employee_email: employee_email,
-      employee_first_name: employee_first_name,
-      employee_last_name: employee_last_name,
-      employee_phone: employee_phone,
-      active_employee: active_employee,
-      employee_password: employee_password
+      customer_email: customer_email,
+      customer_first_name: customer_first_name,
+      customer_last_name: customer_last_name,
+      customer_phone_number: customer_phone,
+      active_customer_status: active_customer,
+      customer_hash: customer_password
   }
 
-  const newEmployee = employeeService.createEmployee(formData, loggedInEmployeeToken);
-  newEmployee.then((res)=>res.json())
+  const newCustomer = customerService.createCustomer(formData, loggedInEmployeeToken);
+  newCustomer.then((res)=>res.json())
   .then((data)=>{
     if(data.error){
       setServerError(data.error);
@@ -95,7 +95,7 @@ const AddEmployeeForm = () => {
     else{
       setSuccess(true);
       setServerError('');
-      navigate('/');
+      navigate('/admin');
       setLoading(true);
     }
   })
@@ -105,42 +105,44 @@ const AddEmployeeForm = () => {
         <div className="container mt-5 mb-5">
         {/* after this heading their is a red line horizontally aligned to it */}
         <div className='d-flex align-items-baseline'> {/*decrease the gap between heading and line */}
-          <h2 className='mr-3 font-weight-bold mb-5'>Add a new employee</h2>
+          <h2 className='mr-3 font-weight-bold mb-5'>Add a new customer</h2>
           <hr style={{ border: '1px solid red', width: '5%' }} />
         </div>
         
         <form onSubmit={handleSubmit}>
           {serverError && <div className={styles.validation_error}>{serverError}</div>}
           <div className="form-group mb-4">
-            <input type="email" className="form-control" value={employee_email} required onChange={event => setEmployeeEmail(event.target.value)} id="email" placeholder="Employee email" style={{width: '50%'}}/>
+            <input type="email" className="form-control" value={customer_email} required onChange={event => setCustomerEmail(event.target.value)} id="email" placeholder="Customer email" style={{width: '50%'}}/>
           </div>
           {email_error && <div className={styles.validation_error}>{email_error}</div>}
           <div className="form-group mb-4">
-            <input type="text" className="form-control" id="fname" required value={employee_first_name} onChange={event => setEmployeeFirstName(event.target.value)} placeholder="Employee First Name" style={{width: '50%'}} />
+            <input type="text" className="form-control" id="fname" required value={customer_first_name} onChange={event => setCustomerFirstName(event.target.value)} placeholder="Customer First Name" style={{width: '50%'}} />
           </div>
           {first_name_error && <div className={styles.validation_error}>{first_name_error}</div>}
           <div className="form-group mb-4">
-            <input type="text" className="form-control" id="lname" required value={employee_last_name} onChange={event => setEmployeeLastName(event.target.value)} placeholder="Employee Last Name" style={{width: '50%'}} />
+            <input type="text" className="form-control" id="lname" required value={customer_last_name} onChange={event => setCustomerLastName(event.target.value)} placeholder="Customer Last Name" style={{width: '50%'}} />
           </div>
           {last_name_error && <div className={styles.validation_error}>{last_name_error}</div>}
           <div className="form-group mb-4">
-            <input type="text" className="form-control" id="phone" required value={employee_phone} onChange={event => setEmployeePhone(event.target.value)} placeholder="Employee phone (555 555 555)" style={{width: '50%'}} />
+            <input type="text" className="form-control" id="phone" required value={customer_phone} onChange={event => setCustomerPhone(event.target.value)} placeholder="Customer phone (555 555 555)" style={{width: '50%'}} />
           </div>
           <div className="form-group mb-4">
-            <select className="form-control" id="option" placeholder="Employee type" style={{width: '50%'}}>
+            <select className="form-control" id="option" placeholder="customer active status" style={{width: '50%'}}>
               <option value="">---Select---</option>
-              <option value="full-time">Employee</option>
-              <option value="part-time">Customer</option>
+              <option value="1">Active</option>
+              <option value="0">Inactive</option>
             </select>
           </div>
+          {success && <div className={styles.success_message}>Customer added successfully!</div>}
+          
           <div className="form-group mb-4" style={{ position: 'relative', width: '50%' }}>
           <input
             type={showPassword ? 'text' : 'password'}
             className="form-control pe-5"
             id="password"
             required
-            value={employee_password}
-            onChange={event => setEmployeePassword(event.target.value)}
+            value={customer_password}
+            onChange={event => setCustomerPassword(event.target.value)}
             placeholder="Password"
           />
           <i
@@ -152,11 +154,11 @@ const AddEmployeeForm = () => {
         </div>
 
           {password_error && <div className={styles.validation_error}>{password_error}</div>}
-          <button type="submit" className="theme-btn btn-style-one">{loading?<ClipLoader size={30} />:'ADD EMPLOYEE'}</button>
+          <button type="submit" className="theme-btn btn-style-one">{loading?<ClipLoader size={30} />:'ADD CUSTOMER'}</button>
         </form>
       </div>
     </>
   )
 }
 
-export default AddEmployeeForm
+export default AddCustomerForm

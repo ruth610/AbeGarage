@@ -7,6 +7,7 @@ import {useAuth} from '../../../context/AuthContext';
 
 const Header = () => {
     const {isLogged, isAdmin,employee,setIsLogged} = useAuth();
+    // console.log(isAdmin);
     const handleClick = ()=>{
         
         setIsLogged(false);
@@ -25,7 +26,7 @@ const Header = () => {
                             <div className="office-hour">Monday - Saturday 7:00AM - 6:00PM</div>
                         </div>
                         <div className="right-column">
-                            <div className="phone-number">{isLogged?'Welcome, ' + employee.employee_first_name:'Schedule Your Appontment Today '}: <strong>1800 456 7890</strong>
+                            <div className="phone-number">{isLogged?'Welcome, ' + employee?.employee_first_name:'Schedule Your Appontment Today '}: <strong>1800 456 7890</strong>
                             </div>
 
                         </div>
@@ -61,6 +62,7 @@ const Header = () => {
                                             <li className="dropdown"><Link to="/services">Services</Link>
                                             </li>
                                             <li><Link to="/contact">Contact Us</Link></li>
+                                            {isAdmin && <li><Link to="/admin">ADMIN</Link></li>}
                                         </ul>
                                     </div>
                                 </nav>

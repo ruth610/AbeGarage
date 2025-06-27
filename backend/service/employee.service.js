@@ -19,6 +19,7 @@ async function checkIfEmployeeAlreadyExists(email){
 async function getEmployeeByEmail(email){   
     const query1 = "SELECT * FROM employee JOIN employee_info  ON employee.employee_id = employee_info.employee_id JOIN employee_pass ON employee_pass.employee_id = employee.employee_id JOIN employee_role ON employee_role.employee_id = employee.employee_id WHERE employee.employee_email = ?;"
     const rows = await query(query1,[email]);
+    console.log(rows);
     return rows
 }
 
@@ -32,6 +33,7 @@ async function createEmployee(data){
     const phone = data.employee_phone
     const active = data.active_employee
     const password = data.employee_password
+    const employee_role = data.employee_role?data.employee_role:1
     let  createEmployee = {}
     try {
 
@@ -53,7 +55,7 @@ async function createEmployee(data){
         const query3 = 'INSERT INTO employee_pass(employee_id,employee_password_hashed) VALUES(?,?)';
         const reponse3 = await query(query3,[employee_id,hashedPassword]);
         const query4 = 'INSERT INTO employee_role(employee_id,company_role_id) VALUES(?,?)';
-        const response4 = await query(query4,[employee_id,1]);
+        const response4 = await query(query4,[employee_id,employee_role]);
 
         await conn.commit()
         createEmployee = {

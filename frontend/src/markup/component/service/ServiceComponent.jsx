@@ -13,12 +13,12 @@ const ServiceComponent = () => {
                         runway heading towards a streamlined cloud solution. </div>
                 </div>
                 <div className="row">
-                    <ServiceCard name="Service and Repairs" description="Performance Upgrade" icon="flaticon-power"/>
-                    <ServiceCard name="Service and Repairs" description="Transmission Services" icon="flaticon-gearbox"/>
-                    <ServiceCard name="Service and Repairs" description="Break Repair & Service" icon="flaticon-brake-disc"/>
-                    <ServiceCard name="Service and Repairs" description="Engine Service & Repair" icon="flaticon-car-engine"/>
-                    <ServiceCard name="Service and Repairs" description="Tyre & Wheels" icon="flaticon-tire"/>
-                    <ServiceCard name="Service and Repairs" description="Denting & Painting" icon="flaticon-spray-gun"/>
+                    <ServiceCard name="Service and Repairs" description="Performance Upgrade" icon="flaticon-power" direct=""/>
+                    <ServiceCard name="Service and Repairs" description="Transmission Services" icon="flaticon-gearbox" direct=""/>
+                    <ServiceCard name="Service and Repairs" description="Break Repair & Service" icon="flaticon-brake-disc" direct=""/>
+                    <ServiceCard name="Service and Repairs" description="Engine Service & Repair" icon="flaticon-car-engine" direct=""/>
+                    <ServiceCard name="Service and Repairs" description="Tyre & Wheels" icon="flaticon-tire" direct=""/>
+                    <ServiceCard name="Service and Repairs" description="Denting & Painting" icon="flaticon-spray-gun" direct=""/>
                 </div>
             </div>
         </section>
