@@ -2,9 +2,9 @@ import { Link, useParams } from 'react-router-dom';
 import customerService from '../../../../services/customer.service';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import AddVehicles from '../vehicles/addVehicles';
 
 const CustomerProfile = () => {
-    const [customer ,setCustomer] = useState({});
     const [customer_email,setCustomerEmail] = useState('');
     const [customer_phone,setCustomerPhone] = useState('');
     const [active_customer,setActiveCustomer] = useState(1);
@@ -12,8 +12,10 @@ const CustomerProfile = () => {
     const [customer_last_name, setCustomerLastName] = useState('');
     const [serverError , setServerError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showAddVehicle, setShowAddVehicle] = useState(false);
 
     const customer_id = useParams();
+    // console.log(customer_id);
     const fetchCustomer = async () => {
 
       try {
@@ -25,7 +27,6 @@ const CustomerProfile = () => {
           setLoading(false);
         } else {
             console.log(data);
-            setCustomer(data);
             setCustomerEmail(data.customer_email);
             setCustomerFirstName(data.customer_first_name);
             setCustomerLastName(data.customer_last_name);
@@ -96,7 +97,12 @@ const CustomerProfile = () => {
           <div className="bg-white p-3 shadow-sm mb-3" style={{ borderRadius: '5px' }}>
             No vehicle found
           </div>
-          <button className="btn btn-danger">ADD NEW VEHICLE</button>
+          <button className="btn btn-danger" onClick={() => setShowAddVehicle(true)}>ADD NEW VEHICLE</button>
+          {showAddVehicle && (
+            <AddVehicles
+              onDone={() => setShowAddVehicle(false)} // optionally hide the form after adding
+            />
+          )}
 
           <hr className="mt-5" />
 

@@ -16,7 +16,7 @@ const SideBar = () => {
 					<Link to="#map-settings" className='list-group-item'>Employees</Link>
                     <Link to="/admin/add-customer" className='list-group-item'>Add Customers</Link>
                     <Link to="/admin/customers" className='list-group-item'>Customers </Link>
-                    <Link to="#support" className='list-group-item'>Services </Link>
+                    <Link to="/admin/services" className='list-group-item'>Services </Link>
                 </div>
                 
         </div>

@@ -1,11 +1,10 @@
-const vehicleService = require('../service/vehicle.service');
-const { checkIfVehicleAlreadyExists } = require('../service/vehicles.service');
+const vehicleService = require('../service/vehicles.service');  
 
 async function addVehicle(req, res) {
     try {
         const vehicleData = req.body;
         // check if the vehicle already exists
-        const vehicleExists = await checkIfVehicleAlreadyExists(vehicleData.vehicle_serial);
+        const vehicleExists = await vehicleService.checkIfVehicleExists(vehicleData.vehicle_serial);
         if (vehicleExists) {
             console.log('Vehicle already exists');
             return res.status(400).json({ message: "Vehicle already exists!" });

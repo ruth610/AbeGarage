@@ -11,7 +11,7 @@ import UnAuthorized from './markup/pages/UnAutherized';
 import PrivateAuthRoute from './markup/component/auth/PrivateAuthRoute';
 import Employees from './markup/pages/admin/employee/Employees';
 import Customers from './markup/pages/admin/customer/Customers';
-import Order from './markup/pages/admin/order/Order';
+import Order from './markup/pages/admin/order/NewOrder';
 import Header from './markup/component/header/Header';
 import Footer from './markup/component/footer/Footer';
 import ServiceComponent from './markup/component/service/ServiceComponent';
@@ -22,6 +22,7 @@ import CustomersList from './markup/pages/admin/customerList/CustomersList';
 import UpdateCustomer from './markup/pages/admin/updateCustomer/UpdateCustomer';
 import CustomerProfile from './markup/pages/admin/customerProfile/CustomerProfile';
 import CustomerProfileList from './markup/pages/admin/customerProfile/CustomerProfileList';
+import ServicePage from './markup/pages/admin/service/ServicePage';
 function App() {
 
 
@@ -67,6 +68,12 @@ function App() {
         element={
           <PrivateAuthRoute roles={[3]}>
             <AddEmployee />
+          </PrivateAuthRoute>
+        } />
+        <Route path="/admin/services"
+        element={
+          <PrivateAuthRoute roles={[3]}>
+            <ServicePage />
           </PrivateAuthRoute>
         } />
       {/* 

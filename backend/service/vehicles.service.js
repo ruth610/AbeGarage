@@ -1,3 +1,5 @@
+const { db, query } = require("../config/dbConfig");
+
 async function createVehicle(data) {
     const conn = await db.getConnection();
     let createVehicle = {};
@@ -14,7 +16,7 @@ async function createVehicle(data) {
     try {
         await conn.beginTransaction();
 
-        const query1 = 'INSERT INTO vehicle (customer_id, vehicle_make, vehicle_model, vehicle_year, vehicle_type, vehicle_mileage, vehicle_serial, vehicle_color, vehicle_tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const query1 = 'INSERT INTO customer_vehicle_info (customer_id, vehicle_make, vehicle_model, vehicle_year, vehicle_type, vehicle_mileage, vehicle_serial, vehicle_color, vehicle_tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
         const response1 = await query(query1, [customer_id, make, model, year, type, mileage, serial, color, tag]);
         if (response1.affectedRows !== 1) {
             return false;
@@ -44,9 +46,9 @@ async function createVehicle(data) {
     }
 }
 
-async function checkIfVehicleExists(vehicleId) {
-    const query1 = "SELECT * FROM vehicle WHERE vehicle_id = ?";
-    const rows = await query(query1, [vehicleId]);
+async function checkIfVehicleExists(vehicle_serial) {
+    const query1 = "SELECT * FROM customer_vehicle_info WHERE vehicle_serial = ?";
+    const rows = await query(query1, [vehicle_serial]);
     return rows.length > 0;
 }
 
@@ -55,7 +57,7 @@ async function updateVehicle(vehicleId, data) {
     try {
         await conn.beginTransaction();
 
-        const query1 = 'UPDATE vehicle SET customer_id = ?, vehicle_make = ?, vehicle_model = ?, vehicle_year = ?, vehicle_type = ?, vehicle_mileage = ?, vehicle_serial = ?, vehicle_color = ?, vehicle_tag = ? WHERE vehicle_id = ?';
+        const query1 = 'UPDATE customer_vehicle_info SET customer_id = ?, vehicle_make = ?, vehicle_model = ?, vehicle_year = ?, vehicle_type = ?, vehicle_mileage = ?, vehicle_serial = ?, vehicle_color = ?, vehicle_tag = ? WHERE vehicle_id = ?';
         const response1 = await query(query1, [data.customer_id, data.vehicle_make, data.vehicle_model, data.vehicle_year, data.vehicle_type, data.vehicle_mileage, data.vehicle_serial, data.vehicle_color, data.vehicle_tag, vehicleId]);
         if (response1.affectedRows !== 1) {
             return false;
@@ -73,7 +75,7 @@ async function updateVehicle(vehicleId, data) {
 }
 
 async function checkIfVehicleAlreadyExists(serial) {
-    const query1 = "SELECT * FROM vehicle WHERE vehicle_serial = ?";
+    const query1 = "SELECT * FROM customer_vehicle_info WHERE vehicle_serial = ?";
     const rows = await query(query1, [serial]);
     return rows.length > 0;
 }
