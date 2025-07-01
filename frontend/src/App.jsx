@@ -23,6 +23,7 @@ import UpdateCustomer from './markup/pages/admin/updateCustomer/UpdateCustomer';
 import CustomerProfile from './markup/pages/admin/customerProfile/CustomerProfile';
 import CustomerProfileList from './markup/pages/admin/customerProfile/CustomerProfileList';
 import ServicePage from './markup/pages/admin/service/ServicePage';
+import NewOrder from './markup/pages/admin/order/NewOrder';
 function App() {
 
 
@@ -74,6 +75,12 @@ function App() {
         element={
           <PrivateAuthRoute roles={[3]}>
             <ServicePage />
+          </PrivateAuthRoute>
+        } />
+        <Route path="/admin/createOrder"
+        element={
+          <PrivateAuthRoute roles={[3]}>
+            <NewOrder />
           </PrivateAuthRoute>
         } />
       {/* 

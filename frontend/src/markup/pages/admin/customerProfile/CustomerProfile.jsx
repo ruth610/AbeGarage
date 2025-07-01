@@ -3,6 +3,7 @@ import customerService from '../../../../services/customer.service';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AddVehicles from '../vehicles/addVehicles';
+import CustomerInfo from './CustomerInfo';
 
 const CustomerProfile = () => {
     const [customer_email,setCustomerEmail] = useState('');
@@ -79,16 +80,14 @@ const CustomerProfile = () => {
         {/* Main Content */}
         <div className="col-md-10">
           {/* Info Section */}
-          <h4 className="mb-4 mt-1">Customer: <strong>{customer_first_name} {customer_last_name}</strong></h4>
-          <p><strong>Email:</strong> {customer_email}</p>
-          <p><strong>Phone Number:</strong> {customer_phone}</p>
-          <p><strong>Active Customer:</strong> {active_customer === 1 ? "YES" : "NO"}</p>
-          <p>
-            <strong>Edit customer info: </strong>
-            <Link to={`/admin/customer/${customer_id.customer_id}`} className="text-danger">
-              <i className="bi bi-pencil-square"></i>
-            </Link>
-          </p>
+          <CustomerInfo customer={{
+            customer_email,
+            customer_phone,
+            active_customer,
+            customer_first_name,
+            customer_last_name,
+            customer_id: customer_id.customer_id
+          }} />
 
           <hr />
 

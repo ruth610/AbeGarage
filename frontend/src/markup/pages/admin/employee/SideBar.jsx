@@ -9,9 +9,9 @@ const SideBar = () => {
                     <h2>ADMIN MENU</h2>
                 </div>
             	<div className='group-list'>
-                	<Link to="#introduction" className='list-group-item'>Dashboard </Link>
+                	<Link to="/admin" className='list-group-item'>Dashboard </Link>
                     <Link to="#html-structure" className='list-group-item'>Orders</Link>
-                    <Link to="#css-structure" className='list-group-item'>New Order</Link>
+                    <Link to="/admin/createOrder" className='list-group-item'>New Order</Link>
                     <Link to="/admin/add-employee" className='list-group-item'>Add Employees </Link>
 					<Link to="#map-settings" className='list-group-item'>Employees</Link>
                     <Link to="/admin/add-customer" className='list-group-item'>Add Customers</Link>

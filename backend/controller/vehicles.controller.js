@@ -46,7 +46,24 @@ async function updateVehicle(req, res) {
     }
 }
 
+async function getVehicleById(req, res) {
+    try {
+        const customer_id = req.params.id;
+        console.log(customer_id);
+        const vehicle = await vehicleService.getVehicleById(customer_id);
+        console.log(vehicle);
+        if (!vehicle) {
+            return res.status(404).send({ error: 'Vehicle not found' });
+        }
+        return res.status(200).send(vehicle);
+    } catch (error) {
+        console.error('Error fetching vehicle:', error);
+        return res.status(500).send({ error: 'Internal server error' });
+    }
+}
+
 module.exports = {
     addVehicle,
-    updateVehicle
+    updateVehicle,
+    getVehicleById
 };

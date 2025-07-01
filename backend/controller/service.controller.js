@@ -29,7 +29,7 @@ async function addService(req, res) {
 async function getAllServices(req, res) {
     try {
         const services = await Service.getAllServices();
-        console.log(services);
+        // console.log(services);
         return res.status(200).json(services);
     } catch (error) {
         console.error('Error fetching services:', error);

@@ -80,9 +80,19 @@ async function checkIfVehicleAlreadyExists(serial) {
     return rows.length > 0;
 }
 
+async function getVehicleById(customer_id) {
+    const query1 = "SELECT * FROM customer_vehicle_info WHERE customer_id = ?";
+    const [rows] = await query(query1, [customer_id]);
+    console.log(rows)
+    if (rows.length === 0) {
+        return null; // Vehicle not found
+    }
+    return rows;
+}
 module.exports = {
     createVehicle,
     checkIfVehicleAlreadyExists,
     checkIfVehicleExists,
-    updateVehicle
+    updateVehicle,
+    getVehicleById
 };

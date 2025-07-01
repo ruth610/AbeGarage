@@ -80,9 +80,25 @@ async function updateCustomer(req, res) {
         return res.status(500).send({ error: 'Internal server error' });
     }
 }
+
+
+async function searchCustomers(req, res) {
+  try {
+    const query = req.query.search || '';
+    const results = await customerService.searchCustomers(query);
+    console.log(results);
+    return res.status(200).json(results);
+  } catch (err) {
+    console.log(err)
+    return res.status(500).json({ message: 'Search failed', error: err.message });
+  }
+}
+
+
 module.exports = {
     addCustomer,
     updateCustomer,
     getCustomerById,
-    getAllCustomers
+    getAllCustomers,
+    searchCustomers
 };

@@ -149,6 +149,40 @@ async function getCustomerByEmail(email) {
     }
     return rows[0];
 }
+
+
+async function searchCustomers(query) {
+  const conn = await db.getConnection();
+  try {
+    const search = `%${query}%`;
+    const [results] = await conn.query(`
+        SELECT customer_identifier.customer_id AS id,
+                customer_identifier.customer_email,
+                customer_identifier.customer_phone_number,
+                customer_info.customer_first_name,
+                customer_info.customer_last_name,
+                customer_info.active_customer_status
+        FROM customer_identifier
+        INNER JOIN customer_info
+            ON customer_identifier.customer_id = customer_info.customer_id
+        WHERE customer_info.customer_first_name LIKE ?
+            OR customer_info.customer_last_name LIKE ?
+            OR customer_identifier.customer_email LIKE ?
+            OR customer_identifier.customer_phone_number LIKE ?
+        `, [search, search, search, search]);
+
+    console.log(results);
+
+    return results;
+  } catch (err) {
+    console.error('Customer search failed:', err);
+    throw err;
+  } finally {
+    conn.release();
+  }
+}
+
+
 module.exports = {
     createCustomer,
     checkIfCustomerAlreadyExists,
@@ -156,5 +190,6 @@ module.exports = {
     updateCustomer,
     getAllCustomers,
     getCustomerById,
-    getCustomerByEmail
+    getCustomerByEmail,
+    searchCustomers
 };
