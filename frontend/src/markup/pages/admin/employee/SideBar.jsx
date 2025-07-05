@@ -10,7 +10,7 @@ const SideBar = () => {
                 </div>
             	<div className='group-list'>
                 	<Link to="/admin" className='list-group-item'>Dashboard </Link>
-                    <Link to="#html-structure" className='list-group-item'>Orders</Link>
+                    <Link to="/admin/orders" className='list-group-item'>Orders</Link>
                     <Link to="/admin/createOrder" className='list-group-item'>New Order</Link>
                     <Link to="/admin/add-employee" className='list-group-item'>Add Employees </Link>
 					<Link to="#map-settings" className='list-group-item'>Employees</Link>

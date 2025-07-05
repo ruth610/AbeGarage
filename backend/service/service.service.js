@@ -53,7 +53,26 @@ async function updateService(serviceId, {service_name, service_description}) {
     }
 }
 
+async function getServiceById(serviceId) {
+    const conn = await db.getConnection();
+    try {
+        const query = 'SELECT * FROM common_services WHERE service_id = ?';
+        const [rows] = await conn.query
+(query, [serviceId]);
+        conn.release();
+        if (rows.length === 0) {
+            throw new Error('Service not found');
+        }
+        return rows[0];
+    }
+    catch (error) {
+        console.error('Error fetching service by ID:', error);
+        throw new Error('Failed to fetch service');
+    }
+}
+
 module.exports = {
+    getServiceById,
     createService,
     getAllServices,
     updateService

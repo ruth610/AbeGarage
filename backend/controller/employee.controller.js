@@ -26,4 +26,19 @@ async function createEmployee(req,res,next){
 
 
 }
-module.exports = {createEmployee}
+
+async function getActiveEmployees(req, res) {
+    try {
+        const employees = await employeeService.getActiveEmployees();
+        if (!employees || employees.length === 0) {
+            console.log(employees);
+            return res.status(statusCode.NOT_FOUND).json({ error: 'No active employees found' });
+        }
+        console.log(employees);
+        return res.status(statusCode.OK).json(employees);
+    } catch (error) {
+        console.error('Error fetching active employees:', error);
+        return res.status(statusCode.INTERNAL_SERVER_ERROR).json({ error: 'Internal server error' });
+    }
+}
+module.exports = {createEmployee, getActiveEmployees}

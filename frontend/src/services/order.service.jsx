@@ -26,5 +26,49 @@ async function getVehiclesByCustomer(customerId, token) {
   return response.json();
 }
 
-const orderService = { searchCustomers, getVehiclesByCustomer };
+async function addOrder(orderData, token) {
+  const response = await fetch(`${api_url}/api/order`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token
+    },
+    body: JSON.stringify(orderData)
+  });
+  if (!response.ok) {
+    throw new Error('Failed to create order');
+  }
+  return response.json();
+}
+async function getAllOrders(token) {
+  const response = await fetch(`${api_url}/api/orders`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to fetch orders');
+  }
+  return response.json();
+}
+
+async function getOrderById(orderId, token) {
+  const response = await fetch(`${api_url}/api/order/${orderId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to fetch order');
+  }
+  return response.json();
+}
+
+
+
+const orderService = { getOrderById,getAllOrders,searchCustomers, getVehiclesByCustomer, addOrder };
 export default orderService;

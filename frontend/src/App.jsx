@@ -24,6 +24,8 @@ import CustomerProfile from './markup/pages/admin/customerProfile/CustomerProfil
 import CustomerProfileList from './markup/pages/admin/customerProfile/CustomerProfileList';
 import ServicePage from './markup/pages/admin/service/ServicePage';
 import NewOrder from './markup/pages/admin/order/NewOrder';
+import Orders from './markup/pages/admin/order/Orders';
+import OrderDetail from './markup/pages/admin/order/OrderDetail';
 function App() {
 
 
@@ -42,12 +44,12 @@ function App() {
           </PrivateAuthRoute>
         } />
       {/* // Add the Orders Route  */}
-      <Route path="/admin/orders"
+      {/* <Route path="/admin/orders"
         element={
           <PrivateAuthRoute roles={[1, 2, 3]}>
             <Order />
           </PrivateAuthRoute>
-        } />
+        } /> */}
       {/* // Add the Customers Route  */}
       <Route path="/admin/add-customer"
         element={
@@ -82,6 +84,18 @@ function App() {
           <PrivateAuthRoute roles={[3]}>
             <NewOrder />
           </PrivateAuthRoute>
+        } />
+        <Route path="/admin/orders"
+        element={
+          <PrivateAuthRoute roles={[3]}>
+            <Orders />
+          </PrivateAuthRoute>
+        } />
+        <Route path="/admin/order/:id"
+        element={
+          
+            <OrderDetail />
+  
         } />
       {/* 
         Customers (/admin/customers) - managers and admins

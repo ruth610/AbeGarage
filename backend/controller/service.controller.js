@@ -76,8 +76,23 @@ async function deleteService(req, res) {
         return res.status(500).json({ error: 'Internal server error.' });
     }
 }
+async function getServiceById(req, res) {
+    const serviceId = req.params.id;
+
+    try {
+        const service = await Service.getServiceById(serviceId);
+        if (!service) {
+            return res.status(404).json({ error: 'Service not found.' });
+        }
+        return res.status(200).json(service);
+    } catch (error) {
+        console.error('Error fetching service:', error);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+}
 
 module.exports = {
+    getServiceById,
     deleteService,
     updateService,
     addService,

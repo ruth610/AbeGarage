@@ -6,19 +6,19 @@ async function createOrder(req, res) {
       customer_id,
       employee_id,
       vehicle_id,
-      service_id,
-      order_status = 'pending', // default if not provided
+      services,
+      order_status = 1, // default if not provided
       order_total_price = 0,
       estimated_completion_date = null,
       completion_date = null,
-      additional_request = '',
+      additional_request,
       notes_for_internal_use = '',
       notes_for_customer = '',
       additional_requests_completed = false
     } = req.body;
 
     const order_date = new Date(); // Set current date
-    const service_completed = order_status === 'completed' ? 'completed' : 'pending';
+    const service_completed = order_status === 1 ? 'completed' : 'pending';
     const active_order = true; // You can adjust based on logic
     const order_hash = Math.random().toString(36).substring(2, 15); // example hash
 
@@ -26,7 +26,7 @@ async function createOrder(req, res) {
       customer_id,
       employee_id,
       vehicle_id,
-      service_id,
+      services,
       order_status,
       order_total_price,
       estimated_completion_date,
@@ -42,6 +42,8 @@ async function createOrder(req, res) {
     };
 
     const newOrder = await OrderService.createOrder(orderData);
+    console.log(newOrder);
+    
     if (!newOrder) {
       return res.status(400).json({ message: 'Could not create order' });
     }

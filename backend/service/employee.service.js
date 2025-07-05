@@ -73,4 +73,16 @@ async function createEmployee(data){
 
 }
 
-module.exports = {checkIfEmployeeAlreadyExists,createEmployee,getEmployeeByEmail};
+async function getActiveEmployees(){
+    const query1 = 'SELECT * FROM employee JOIN employee_info ON employee.employee_id = employee_info.employee_id WHERE active_employee = 1';
+    const rows = await query(query1);
+    // console.log([rows]);
+    if(rows.length > 0){
+        return rows;
+    }
+    else{
+        return false;
+    }
+}
+
+module.exports = {checkIfEmployeeAlreadyExists,createEmployee,getEmployeeByEmail,getActiveEmployees};

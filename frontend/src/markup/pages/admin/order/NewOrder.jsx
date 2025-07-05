@@ -7,6 +7,7 @@ import { useAuth } from "../../../../context/AuthContext";
 import { useNavigate } from "react-router";
 import CustomerInfo from "../customerProfile/CustomerInfo";
 import service from '../../../../services/service.service';
+import employeeService from "../../../../services/employee.service";
 
 
 const NewOrder = () => {
@@ -15,6 +16,8 @@ const NewOrder = () => {
     description: '',
     price: ''
   });
+  const [activeEmployees, setActiveEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [services, setServices] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -48,9 +51,26 @@ const NewOrder = () => {
       setLoading(false);
     }
   };
+  const fetchActiveEmployees = async () => {
+    setLoading(true);
+    try {
+      const res = await employeeService.getActiveEmployees(loggedInEmployeeToken);
+      console.log(res);
+      if (Array.isArray(res)) { 
+        setActiveEmployees(res);
+        setLoading(false);
+      } else {
+        setActiveEmployees([]); // fallback
+      }
+    } catch (err) {
+      console.error('Error fetching active employees:', err);
+      setLoading(false);
+    }
+  };
 
   const toggleInfo = async (customer) => {
       setSelectedCustomer(customer); // Set the chosen customer
+      fetchActiveEmployees(); // Fetch active employees when a customer is selected
 
       try {
         console.log(customer.id);
@@ -104,7 +124,42 @@ const NewOrder = () => {
         : [...prev, serviceId] // add if not selected
     );
   };
+
+  async function handleAddServiceRequest(){
+    const formData = {
+      additional_request:additionalRequest.description,
+      order_total_price:additionalRequest.price,
+      vehicle_id:selectedVehicle.vehicle_id,
+      employee_id:selectedEmployee.employee_id,
+      customer_id:selectedCustomer.id,
+      services: selectedServices.map(serviceId => ({ service_id: serviceId })),
+    }
+    try {
+      if( !selectedCustomer || !selectedEmployee || !selectedVehicle || selectedServices.length === 0) {
+        // console.log(selectedEmployee.employee_id)
+        console.error('Please select a customer, employee, vehicle, and at least one service.');
+        return;
+      }
+      const res = await orderService.addOrder(formData, loggedInEmployeeToken);
+      console.log(res);
+      if (res ) {
+        // Handle successful service addition
+        alert('order added successfully!');
+        setSelectedCustomer(null);
+        setSelectedEmployee(null);
+        setSelectedVehicle(null);
+        setSelectedServices([]);
+        setAdditionalRequest({ description: '', price: '' });
+      } else {
+        // Handle failure
+        console.error('Failed to add order');
+      }
+    } catch (err) {
+      console.error('Error adding services:', err);
+    }
+  }
       console.log(selectedServices);
+      console.log(activeEmployees)
   return (
     <>
      <div className='container-fluid'>
@@ -122,6 +177,63 @@ const NewOrder = () => {
                     selectedCustomer ? (
                       <div className="p-2">
                         <CustomerInfo customer_email={selectedCustomer?.customer_email} customer_phone={selectedCustomer?.customer_phone_number} active_customer={selectedCustomer?.active_customer_status} customer_id={selectedCustomer?.customer_id} customer_first_name={selectedCustomer?.customer_first_name} customer_last_name={selectedCustomer?.customer_last_name} onBack={() => setSelectedCustomer(null)}/>
+                          {selectedEmployee? <h5>Selected Customer:{selectedEmployee?.employee_first_name}</h5>:(
+                            <div>
+                            <div className='card p-3'>
+                              <h4>Choose Employee</h4>
+
+                              
+                            {loading ? (
+                              
+                                <p>Loading...</p>
+                              ) : customers.length === 0 ? (
+                                <p>No active employee found</p>
+                              ) : (
+                                <table className="table table-striped table-bordered">
+                                    <thead className="thead-dark">
+                                      <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Select</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {activeEmployees && activeEmployees.length > 0 ? (
+                                        activeEmployees.map((employee) => (
+                                          <tr key={employee.employee_id}>
+                                            <td>{employee.employee_first_name}</td>
+                                            <td>{employee.employee_last_name}</td>
+                                            <td>{employee.employee_email}</td>
+                                            <td>{employee.employee_phone_number}</td>
+                                            <td>
+                                              <button
+                                                className="btn btn-outline-secondary btn-sm"
+                                                onClick={() => setSelectedEmployee(employee)}
+                                                title="Select employee"
+                                              >
+                                                <i className="bi bi-hand-index-thumb"></i> {/* Or use FontAwesome/Lucide icon */}
+                                              </button>
+                                            </td>
+                                          </tr>
+                                        ))
+                                      ) : (
+                                        <tr>
+                                          <td colSpan="5" className="text-center">No employee found</td>
+                                        </tr>
+                                      )}
+                                    </tbody>
+                                  </table>
+
+                              )}
+                            <button type='submit' className='btn btn-danger' onClick={() => navigate('/admin/add-employee')}>Add a New Employee</button>
+                        
+                          </div>
+                          </div>
+                          )}
+                         
+                          
                           {selectedVehicle ? (
                             <div>
                             <div>
@@ -201,6 +313,9 @@ const NewOrder = () => {
                                       setAdditionalRequest({ ...additionalRequest, price: e.target.value })
                                     }
                                   />
+                                  <button className="btn btn-outline-secondary btn-sm" onClick={handleAddServiceRequest}>
+                                    SUBMIT Order {/* Or use FontAwesome/Lucide icon */}
+                                  </button>
                                 </div>
                               </div>
                               </div>

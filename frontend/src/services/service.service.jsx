@@ -27,6 +27,17 @@ async function getAllServices(loggedInEmployeeToken){
     return response;
 }
 
-const serviceService =  {addService, getAllServices};
+async function getServiceById(loggedInEmployeeToken, serviceId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': loggedInEmployeeToken
+        }
+    };
+    const response = await fetch(`${api_url}/api/service/${serviceId}`, requestOptions);
+    return response.json();
+}
+const serviceService =  {addService, getAllServices, getServiceById};
 
 export default serviceService;
