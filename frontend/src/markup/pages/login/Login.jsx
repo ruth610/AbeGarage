@@ -15,7 +15,7 @@ function LoginForm() {
   const [isUserTypeSelected, setIsUserTypeSelected] = useState(false);
   const [userType, setUserType] = useState(''); // 'employee' or 'customer'
 
-  const {setIsLogged,setEmployee} = useAuth();
+  const {setIsLogged,setEmployee,login} = useAuth();
 const handleSubmit = async (event) => {
   event.preventDefault();
 
@@ -77,10 +77,10 @@ const handleSubmit = async (event) => {
 
     if (data.message && (data.data?.employee_token || data.data?.customer_token)) {
       const tokenKey = userType === 'employee' ? 'employee' : 'customer';
-      localStorage.setItem(tokenKey, JSON.stringify(data.data));
 
       setIsLogged(true);
       setEmployee(data.data); // you may want to rename to setUser for customer
+      login(data.data, tokenKey);
       setSuccess(true);
 
       // Redirect
