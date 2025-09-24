@@ -131,7 +131,7 @@ const handleSubmit = async (event) => {
               
                      <div>
                       <p>admin:ruthambaw610@gmail.com</p>
-                      <p>customer:ruti@gmail.com</p>
+                      <p>customer:tole@gmail.com</p>
                       <p>employee:christy@gmail.com</p>
                       <p>passwords:123456789</p>
                     </div>
