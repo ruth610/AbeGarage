@@ -13,10 +13,11 @@ export const AuthProvider = ({ children }) => {
   const [customer, setCustomer] = useState(null);
 
   useEffect(() => {
+    const loggedInEmployee = getAuth();
+    const loggedInCustomer =  getCustomerAuth();
     const fetchAuth = async () => {
       try {
         // Check employee login
-        const loggedInEmployee = await getAuth();
         if (loggedInEmployee && loggedInEmployee.employee_token) {
           setIsLogged(true);
           setEmployee(loggedInEmployee);
@@ -26,7 +27,6 @@ export const AuthProvider = ({ children }) => {
         }
 
         // Check customer login
-        const loggedInCustomer = await getCustomerAuth();
         if (loggedInCustomer && loggedInCustomer.customer_token) {
           setIsLogged(true);
           setCustomer(loggedInCustomer);
