@@ -6,14 +6,12 @@ import '../../../assets/styles/custom.css';
 import {useAuth} from '../../../context/AuthContext';
 
 const Header = () => {
-    const {isLogged, isAdmin,employee,setIsLogged,customer} = useAuth();
+    const {isLogged, isAdmin,employee,setIsLogged,customer,logout} = useAuth();
     console.log(isLogged);
     // console.log(customer.customer_id);
     const handleClick = ()=>{
         
-        setIsLogged(false);
-        localStorage.removeItem('customer');
-        localStorage.removeItem('employee');
+        logout();
     }
     
   return (

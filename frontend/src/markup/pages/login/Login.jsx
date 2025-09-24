@@ -84,7 +84,7 @@ const handleSubmit = async (event) => {
       setSuccess(true);
 
       // Redirect
-      navigate('/home');
+      navigate('/');
     } else {
       setSuccess(false);
       setServerError(data.message || 'Login failed');
