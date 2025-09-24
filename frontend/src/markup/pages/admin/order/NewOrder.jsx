@@ -177,7 +177,7 @@ const NewOrder = () => {
                     selectedCustomer ? (
                       <div className="p-2">
                         <CustomerInfo customer_email={selectedCustomer?.customer_email} customer_phone={selectedCustomer?.customer_phone_number} active_customer={selectedCustomer?.active_customer_status} customer_id={selectedCustomer?.customer_id} customer_first_name={selectedCustomer?.customer_first_name} customer_last_name={selectedCustomer?.customer_last_name} onBack={() => setSelectedCustomer(null)}/>
-                          {selectedEmployee? <h5>Selected Customer:{selectedEmployee?.employee_first_name}</h5>:(
+                          {selectedEmployee? <h5>Selected Employee:{selectedEmployee?.employee_first_name}</h5>:(
                             <div>
                             <div className='card p-3'>
                               <h4>Choose Employee</h4>

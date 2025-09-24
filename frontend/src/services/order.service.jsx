@@ -62,6 +62,21 @@ async function getOrderById(orderId, token) {
       'x-access-token': token
     },
   });
+  // console.log(response)
+  if (!response.ok) {
+    throw new Error('Failed to fetch order');
+  }
+  return response.json();
+}
+async function getOrderByCustomerId(customerId, token) {
+  const response = await fetch(`${api_url}/api/orders/customer/${customerId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token
+    },
+  });
+  // console.log(response)
   if (!response.ok) {
     throw new Error('Failed to fetch order');
   }
@@ -70,5 +85,5 @@ async function getOrderById(orderId, token) {
 
 
 
-const orderService = { getOrderById,getAllOrders,searchCustomers, getVehiclesByCustomer, addOrder };
+const orderService = { getOrderById,getAllOrders,getOrderByCustomerId,searchCustomers, getVehiclesByCustomer, addOrder };
 export default orderService;

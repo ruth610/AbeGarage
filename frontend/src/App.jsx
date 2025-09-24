@@ -26,6 +26,7 @@ import ServicePage from './markup/pages/admin/service/ServicePage';
 import NewOrder from './markup/pages/admin/order/NewOrder';
 import Orders from './markup/pages/admin/order/Orders';
 import OrderDetail from './markup/pages/admin/order/OrderDetail';
+import CustomerOrders from './markup/pages/admin/order/CustomerOrder';
 function App() {
 
 
@@ -95,6 +96,18 @@ function App() {
         element={
           
             <OrderDetail />
+  
+        } />
+        <Route path="/admin/order/:id"
+        element={
+          
+            <OrderDetail />
+  
+        } />
+        <Route path="/customer/:id"
+        element={
+          
+            <CustomerOrders />
   
         } />
       {/* 

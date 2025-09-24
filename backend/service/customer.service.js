@@ -142,12 +142,27 @@ async function checkIfCustomerAlreadyExists(email) {
     return rows.length > 0;
 }
 async function getCustomerByEmail(email) {
-    const query1 = "SELECT * FROM customer_identifier WHERE customer_email = ?";
-    const rows = await query(query1, [email]);
-    if (rows.length === 0) {
-        return null; // Customer not found
-    }
-    return rows[0];
+    const query1 = `
+        SELECT ci.customer_email, ci.customer_hash, cinfo.customer_first_name, 
+                cinfo.customer_last_name, cinfo.active_customer_status,
+                cinfo.customer_id
+        FROM customer_identifier ci
+        JOIN customer_info cinfo ON ci.customer_id = cinfo.customer_id
+        WHERE ci.customer_email = ?
+        `;
+
+        const rows = await query(query1, [email]);
+
+        if (rows.length === 0) {
+        // Customer not found
+        return null;
+        }
+
+        // rows[0] now contains customer_email, customer_hash, customer_first_name, last_name, active_status
+        const customer = rows[0];
+        console.log('hi')
+        console.log(customer)
+        return customer;
 }
 
 

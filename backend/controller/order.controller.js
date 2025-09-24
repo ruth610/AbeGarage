@@ -69,10 +69,13 @@ async function getAllOrders(req, res) {
     }
 }
 
+
 async function getOrderById(req, res) {
     try {
         const orderId = req.params.id;
+        
         const order = await OrderService.getOrderById(orderId);
+        // console.log(order);
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
@@ -82,9 +85,27 @@ async function getOrderById(req, res) {
     }
 }
 
+async function getOrderByCustomerId(req, res) {
+    try {
+        const customer_id = req.params.id;
+        
+        const orders = await OrderService.getOrderByCustomerId(customer_id);
+
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ message: 'No orders found for this customer' });
+        }
+
+        return res.status(200).json(orders);
+    } catch (err) {
+        return res.status(500).json({ message: 'Error fetching orders', error: err.message });
+    }
+}
+
+
 module.exports = {
     createOrder,
     getAllOrders,
-    getOrderById
+    getOrderById,
+    getOrderByCustomerId
 };
 

@@ -90,13 +90,13 @@ const AddCustomerForm = () => {
   .then((data)=>{
     if(data.error){
       setServerError(data.error);
-      setLoading(false)
+      setLoading(true)
     }
     else{
       setSuccess(true);
       setServerError('');
       navigate('/admin');
-      setLoading(true);
+      setLoading(false);
     }
   })
   }

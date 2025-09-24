@@ -29,6 +29,28 @@ const verifyToken = async (req, res, next) => {
     next();
   });
 }
+const verifyCustomerToken = async (req, res, next) => {
+  let token = req.headers["x-access-token"];
+  if (!token) {
+    return res.status(403).send({
+      status: "fail",
+      message: "No token provided!"
+    });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        status: "fail",
+        message: "Unauthorized!"
+      });
+    }
+    // console.log("Here is the decoded token");
+    // console.log(decoded);
+    req.customer_email = decoded.customer_email;
+    next();
+  });
+}
 
 // A function to check if the user is an admin
 const isAdmin = async (req, res, next) => {
@@ -48,7 +70,8 @@ const isAdmin = async (req, res, next) => {
 
 const authMiddleware = {
   verifyToken,
-  isAdmin
+  isAdmin,
+  verifyCustomerToken
 }
 
 module.exports = authMiddleware;

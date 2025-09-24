@@ -45,15 +45,18 @@ async function loginCustomer(customerDataFromUser){
     
     try {
         const customerDataFromDatabase = await customerService.getCustomerByEmail(customerDataFromUser.customer_email);
-        console.log(customerDataFromDatabase[0]);
-        if(customerDataFromDatabase.length[0] === 0){
+        console.log('this is')
+        console.log(customerDataFromUser)
+        console.log(customerDataFromDatabase);
+        if(!customerDataFromDatabase){
+            // console.log('true');
             returnData= {
                 status: "fail",
                 message:"customer does not exist!"
             }
             return returnData;
         }
-        const passwordMatched = await bcrypt.compare(customerDataFromUser.customer_hash,customerDataFromDatabase[0].customer_hash);
+        const passwordMatched = await bcrypt.compare(customerDataFromUser.customer_hash,customerDataFromDatabase.customer_hash);
         if(!passwordMatched){
             returnData ={
                 status:'fail',
@@ -63,7 +66,7 @@ async function loginCustomer(customerDataFromUser){
         }
         return returnData = {
             status:'success',
-            data:customerDataFromDatabase[0]
+            data:customerDataFromDatabase
         }
     } catch (error) {
         console.log(error)

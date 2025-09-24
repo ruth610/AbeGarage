@@ -133,7 +133,7 @@ async function getOrderById(orderId) {
             JOIN order_status ON orders.order_id = order_status.order_id
             WHERE orders.order_id = ?
         `, [orderId]);
-
+        // console.log(orders)
         if (orders.length === 0) return null;
 
         const order = orders[0];
@@ -153,8 +153,50 @@ async function getOrderById(orderId) {
     }
 }
 
+async function getOrderByCustomerId(customerId) {
+    const conn = await db.getConnection();
+    try {
+        const [orders] = await conn.query(`
+            SELECT orders.order_id, orders.customer_id, orders.employee_id, orders.vehicle_id,
+                   orders.order_date, order_info.additional_request,
+                   order_status.order_status = 'completed' AS order_completed,
+                   customer_info.customer_first_name, customer_info.customer_last_name,
+                   customer_identifier.customer_phone_number, customer_identifier.customer_email,
+                   customer_vehicle_info.vehicle_year, customer_vehicle_info.vehicle_serial, customer_vehicle_info.vehicle_model
+
+            FROM orders
+            JOIN order_info ON orders.order_id = order_info.order_id
+            JOIN customer_info ON orders.customer_id = customer_info.customer_id
+            JOIN customer_identifier ON orders.customer_id = customer_identifier.customer_id
+            JOIN customer_vehicle_info ON orders.vehicle_id = customer_vehicle_info.vehicle_id
+            JOIN order_status ON orders.order_id = order_status.order_id
+            WHERE orders.customer_id = ?
+        `, [customerId]);
+
+        if (orders.length === 0) return null;
+
+        // For each order, fetch its services
+        for (let order of orders) {
+            const [services] = await conn.query(
+                'SELECT * FROM order_services WHERE order_id = ?',
+                [order.order_id]
+            );
+            order.order_services = services;
+        }
+
+        return orders;
+    } catch (err) {
+        console.error('Error fetching orders by customer ID:', err);
+        throw err;
+    } finally {
+        conn.release();
+    }
+}
+
+
 module.exports = {
     createOrder,
     getAllOrders,
-    getOrderById
+    getOrderById,
+    getOrderByCustomerId
 };

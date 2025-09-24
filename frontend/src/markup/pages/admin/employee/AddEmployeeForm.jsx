@@ -90,13 +90,13 @@ const AddEmployeeForm = () => {
   .then((data)=>{
     if(data.error){
       setServerError(data.error);
-      setLoading(false)
+      setLoading(true);
     }
     else{
       setSuccess(true);
       setServerError('');
-      navigate('/');
-      setLoading(true);
+      navigate('/admin');
+      setLoading(false);
     }
   })
   }

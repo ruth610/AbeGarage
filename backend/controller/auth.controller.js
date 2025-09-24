@@ -57,6 +57,7 @@ async function loginCustomer(req,res,next){
         }
         else{
             // include a data that u want to use in ur front end
+            console.log(customer);
             const payload = {
             customer_id:customer.data.customer_id,
             customer_email:customer.data.customer_email,

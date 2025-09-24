@@ -7,4 +7,5 @@ const authMiddleware = require('../middleware/auth.middleware');
 router.post('/api/order', [authMiddleware.verifyToken], orderController.createOrder);
 router.get('/api/orders',  orderController.getAllOrders);
 router.get('/api/order/:id', orderController.getOrderById);
+router.get('/api/orders/customer/:id', orderController.getOrderByCustomerId);
 module.exports = router;

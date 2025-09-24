@@ -6,11 +6,13 @@ import '../../../assets/styles/custom.css';
 import {useAuth} from '../../../context/AuthContext';
 
 const Header = () => {
-    const {isLogged, isAdmin,employee,setIsLogged} = useAuth();
-    // console.log(isAdmin);
+    const {isLogged, isAdmin,employee,setIsLogged,customer} = useAuth();
+    console.log(isLogged);
+    // console.log(customer.customer_id);
     const handleClick = ()=>{
         
         setIsLogged(false);
+        localStorage.removeItem('customer');
         localStorage.removeItem('employee');
     }
     
@@ -26,8 +28,20 @@ const Header = () => {
                             <div className="office-hour">Monday - Saturday 7:00AM - 6:00PM</div>
                         </div>
                         <div className="right-column">
-                            <div className="phone-number">{isLogged?'Welcome, ' + employee?.employee_first_name:'Schedule Your Appontment Today '}: <strong>1800 456 7890</strong>
-                            </div>
+                            <div className="phone-number">
+                                {isLogged ? (
+                                    employee ? (
+                                    `Welcome, ${employee.employee_first_name}`
+                                    ) : customer ? (
+                                    `Welcome, ${customer.customer_first_name}`
+                                    ) : null
+                                ) : (
+                                    <>
+                                    Schedule Your Appointment Today: <strong>1800 456 7890</strong>
+                                    </>
+                                )}
+                                </div>
+
 
                         </div>
                     </div>
@@ -61,6 +75,10 @@ const Header = () => {
                                             </li>
                                             <li className="dropdown"><Link to="/services">Services</Link>
                                             </li>
+                                            {
+                                                customer && <li className="dropdown"><Link to={`/customer/${customer.customer_id}`}>My Orders</Link>
+                                            </li>
+                                            }
                                             <li><Link to="/contact">Contact Us</Link></li>
                                             {isAdmin && <li><Link to="/admin">ADMIN</Link></li>}
                                         </ul>

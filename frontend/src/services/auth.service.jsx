@@ -15,6 +15,7 @@ const createEmployee = async (formData, loggedInEmployeeToken) => {
   return response;
 }
 
+
 async function loginEmployee(formData){
     const requestOptions = {
         method: 'POST',
@@ -34,8 +35,28 @@ async function loginEmployee(formData){
     }
     return response;
 };
+async function loginCustomer(formData){
+    const requestOptions = {
+        method: 'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(formData)
+    };
+
+    const response = await fetch(`${api_url}/api/customer/login`,requestOptions);
+
+    // if the response is ok then store the token in localStorage
+    if(response.ok){
+        localStorage.getItem('customer_token');
+    }
+    else{
+        // if the response is not ok then remove the token from localStorage
+        localStorage.removeItem('customer_token');
+    }
+    return response;
+};
 const employeeService = {
     createEmployee,
-    loginEmployee
+    loginEmployee,
+    loginCustomer
 }
 export default employeeService;
