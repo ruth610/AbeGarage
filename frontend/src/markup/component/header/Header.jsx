@@ -6,12 +6,14 @@ import '../../../assets/styles/custom.css';
 import {useAuth} from '../../../context/AuthContext';
 
 const Header = () => {
-    const {isLogged, isAdmin,employee,setIsLogged,customer,logout} = useAuth();
+    const {isLogged, isAdmin,employee,setIsLogged,customer} = useAuth();
     console.log(isLogged);
     // console.log(customer.customer_id);
     const handleClick = ()=>{
         
-        logout();
+        setIsLogged(false);
+        localStorage.removeItem('customer');
+        localStorage.removeItem('employee');
     }
     
   return (
@@ -78,7 +80,7 @@ const Header = () => {
                                             </li>
                                             }
                                             <li><Link to="/contact">Contact Us</Link></li>
-                                            {isAdmin && <li><Link to="/admin">ADMIN</Link></li>}
+                                            <li><Link to="/admin">ADMIN</Link></li>
                                         </ul>
                                     </div>
                                 </nav>
